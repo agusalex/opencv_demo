@@ -2,7 +2,6 @@ import urllib.request
 import cv2
 import numpy as np
 import os
-
 def resize_image():
     img = cv2.imread("note.jpg")
     resized_image = cv2.resize(img, (30, 60))
@@ -54,5 +53,15 @@ def create_pos_n_neg():
                 line = file_type+'/'+img+'\n'
                 with open('bg.txt','a') as f:
                     f.write(line)
+
+def createPos(directory):
+    i=0
+    for filename in os.listdir(directory):   
+        print(directory+'/'+filename)
+        img = cv2.imread(directory+'/'+filename,cv2.IMREAD_GRAYSCALE)
+        # should be larger than samples / pos pic (so we can place our image on it)
+        resized_image = cv2.resize(img, (50, 50))
+        cv2.imwrite("pos/"+str(i)+".jpg",resized_image)
+        i+=1
 
 create_pos_n_neg()
